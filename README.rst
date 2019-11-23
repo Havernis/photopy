@@ -3,15 +3,11 @@ photopy
 =======
 
 
-.. image:: https://img.shields.io/pypi/v/photopy.svg
-        :target: https://pypi.python.org/pypi/photopy
-
 .. image:: https://img.shields.io/travis/Havernis/photopy.svg
         :target: https://travis-ci.com/Havernis/photopy
 
-.. image:: https://readthedocs.org/projects/photopy/badge/?version=latest
-        :target: https://photopy.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+.. image:: https://coveralls.io/repos/github/Havernis/photopy/badge.svg?branch=master
+        :target: https://coveralls.io/github/Havernis/photopy?branch=master
 
 
 
