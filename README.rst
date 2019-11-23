@@ -13,7 +13,7 @@ photopy
 
 
 Short description
-
+--------
 
 * Free software: MIT license
 * Documentation: https://photopy.readthedocs.io.
