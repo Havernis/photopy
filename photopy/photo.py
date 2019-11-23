@@ -12,7 +12,7 @@ class Photo(File):
         self.exif_data = self._populate_exif_data()
 
     def _populate_exif_data(self):
-        return 'photo_exif_data'
+        return {}
 
     def _populate_signature(self):
         return 'photo_signature'

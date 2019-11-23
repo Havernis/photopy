@@ -7,7 +7,7 @@ import os
 
 class File:
     def __init__(self, path):
-        # check if file exists
+        # check if file exists before it being accessed
         if os.path.isfile(path):
             self.path = path
         else:

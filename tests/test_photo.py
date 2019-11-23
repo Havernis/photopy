@@ -13,4 +13,4 @@ def test_init():
         p = Photo('/path/to/photo')
         assert p.extension == 'ext'
         assert p.signature == 'photo_signature'
-        assert p.exif_data == 'photo_exif_data'
+        assert isinstance(p.exif_data, dict)
