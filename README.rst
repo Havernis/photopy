@@ -1,28 +1,24 @@
 =======
-photopy
+Photopy
 =======
 
-
-.. image:: https://img.shields.io/travis/Havernis/photopy.svg
-        :target: https://travis-ci.com/Havernis/photopy
+.. image:: https://travis-ci.com/Havernis/photopy.svg?branch=master
+    :target: https://travis-ci.com/Havernis/photopy
 
 .. image:: https://coveralls.io/repos/github/Havernis/photopy/badge.svg?branch=master
-        :target: https://coveralls.io/github/Havernis/photopy?branch=master
-
-
+    :target: https://coveralls.io/github/Havernis/photopy?branch=master
 
 
 Short description
 --------
 
 * Free software: MIT license
-* Documentation: https://photopy.readthedocs.io.
 
 
 Features
 --------
 
-* TODO
+* TBD
 
 Credits
 -------
