@@ -13,15 +13,17 @@ from photopy.file import File
 from unittest.mock import patch
 
 
-def test_init():
-    with patch('os.path.isfile') as isfile_mock:
-        isfile_mock.return_value = True
-        f = File('/path/to/file')
-        assert isinstance(f, File)
-        assert f.path == '/path/to/file'
-        assert f.name == 'name'
-        assert f.signature == 'signature'
-        assert f.extension == 'ext'
+@pytest.fixture
+@patch('os.path.isfile')
+def f(isfile_mock):
+    isfile_mock.return_value = True
+    f = File('/path/to/file')
+    return f
+
+
+def test_init(f):
+    assert isinstance(f, File)
+    assert f.path == '/path/to/file'
 
 
 def test_init_with_no_args():
@@ -32,3 +34,10 @@ def test_init_with_no_args():
 def test_init_with_invalid_path():
     with pytest.raises(Exception):
         assert File('/path/to/file')
+
+
+def test_populate(f):
+    f.populate()
+    assert f.name == 'name'
+    assert f.signature == 'signature'
+    assert f.extension == 'ext'

@@ -6,9 +6,9 @@
 
 import pytest
 from photopy.scan import Scan
-from photopy.photo import Photo
-from photopy.photo import File
 from unittest.mock import patch
+# from photopy.photo import Photo
+# from photopy.photo import File
 
 
 @pytest.fixture
@@ -23,13 +23,15 @@ def test_init(s):
     assert isinstance(s.db_records, list)
 
 
-def test_scan(s):
-    with patch('os.walk') as walk_patch:
-        walk_patch.return_value = [('/foo', (), ('photo.jpeg', 'file.txt'))]
-        with patch('os.path.isfile') as isfile_mock:  # File init checks if file exists or not
-            isfile_mock.return_value = True
-            list_of_files = s.scan('/root_path')
-            assert isinstance(list_of_files, list)
-            assert isinstance(list_of_files[0], Photo)
-            # assert isinstance(list_of_files[1], File)
-            # asset size of list_of_files
+@patch('photopy.photo.Photo.__init__')
+@patch('os.path.isfile')
+@patch('os.walk')
+def test_scan(walk_patch, isfile_mock, photo_mock, s):
+    walk_patch.return_value = [('/foo', (), ('photo.jpeg', 'file.txt'))]
+    isfile_mock.return_value = True
+    photo_mock.return_value = None
+    list_of_files = s.scan('/root_path')
+    assert isinstance(list_of_files, list)
+    assert isinstance(list_of_files[0], object)
+    # assert isinstance(list_of_files[1], File)
+    # asset size of list_of_files

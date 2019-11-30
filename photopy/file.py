@@ -12,17 +12,22 @@ class File:
             self.path = path
         else:
             raise ValueError
-        self.name = self._populate_name()
-        self.extension = self._populate_extension()
-        self.signature = self._populate_signature()
+        self.name = None
+        self.extension = None
+        self.signature = None
+
+    def populate(self):
+        self._populate_name()
+        self._populate_extension()
+        self._populate_signature()
 
     def _populate_name(self):
-        return 'name'
+        self.name = 'name'
 
     def _populate_signature(self):
         # ToDo: Need to refactor this method as the signature is being
         # populated twice - once in File.__init__ and once here
-        return 'signature'
+        self.signature = 'signature'
 
     def _populate_extension(self):
-        return 'ext'
+        self.extension = 'ext'
