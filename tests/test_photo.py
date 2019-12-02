@@ -36,3 +36,33 @@ def test_populate_exif_data_try(open_mock, p):
     m._getexif.return_value = {'key_A': 'val_A', 'key_B': 'val_B'}
     open_mock.return_value = m
     assert p._populate_exif_data() == [('key_A', 'val_A'), ('key_B', 'val_B')]
+
+
+@patch('PIL.Image.open')
+def test_populate_exif_data_exception(open_mock, p):
+    m = mock.Mock()
+    m._getexif.return_value = ''
+    open_mock.return_value = m
+    with pytest.raises(Exception):
+        assert p._populate_exif_data() == []
+
+
+@patch('imagehash.phash')
+@patch('PIL.Image.open')
+def test_populate_signature(open_mock, phash_mock, p):
+    m = mock.Mock()
+    m._getexif.return_value = ''
+    open_mock.return_value = m
+    phash_mock.return_value = 'image_hash'
+    assert p._populate_signature() == 'image_hash'
+
+
+# This test is used only for 100% coverage as both _populate methods are covered     in other tests
+@patch('photopy.photo.Photo._populate_exif_data')
+@patch('photopy.photo.Photo._populate_signature')
+def test_populate(popsig_mock, popexif_mock, p):
+    popsig_mock.return_value = 'signature_populated'
+    popexif_mock.return_value = 'exif_populated'
+    p.populate()
+    assert p.signature == 'signature_populated'
+    assert p.exif_data == 'exif_populated'
