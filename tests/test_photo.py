@@ -57,7 +57,8 @@ def test_populate_signature(open_mock, phash_mock, p):
     assert p._populate_signature() == 'image_hash'
 
 
-# This test is used only for 100% coverage as both _populate methods are covered     in other tests
+# This test is used only for 100% coverage as both
+# _populate methods are covered in other tests
 @patch('photopy.photo.Photo._populate_exif_data')
 @patch('photopy.photo.Photo._populate_signature')
 def test_populate(popsig_mock, popexif_mock, p):
