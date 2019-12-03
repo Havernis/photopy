@@ -7,7 +7,7 @@ import os
 
 class File:
     def __init__(self, path):
-        # check if file exists before it being accessed
+        # check if file exists before it is being accessed
         if os.path.isfile(path):
             self.path = path
         else:
@@ -17,17 +17,22 @@ class File:
         self.signature = None
 
     def populate(self):
-        self._populate_name()
-        self._populate_extension()
-        self._populate_signature()
+        self.name = self._populate_name()
+        self.extension = self._populate_extension()
+        self.signature = self._populate_signature()
 
     def _populate_name(self):
-        self.name = 'name'
+        name_with_ext = os.path.basename(self.path)
+        name = os.path.splitext(name_with_ext)[0]
+        return name
 
     def _populate_signature(self):
         # ToDo: Need to refactor this method as the signature is being
         # populated twice - once in File.__init__ and once here
-        self.signature = 'signature'
+        return 'signature'
 
     def _populate_extension(self):
-        self.extension = 'ext'
+        name_with_ext = os.path.basename(self.path)
+        # we use the second [] to remove the '.' from ext
+        ext = os.path.splitext(name_with_ext)[1][1:]
+        return ext

@@ -17,13 +17,13 @@ from unittest.mock import patch
 @patch('os.path.isfile')
 def f(isfile_mock):
     isfile_mock.return_value = True
-    f = File('/path/to/file')
+    f = File('/path/to/file_name.txt')
     return f
 
 
 def test_init(f):
     assert isinstance(f, File)
-    assert f.path == '/path/to/file'
+    assert f.path == '/path/to/file_name.txt'
 
 
 def test_init_with_no_args():
@@ -33,11 +33,25 @@ def test_init_with_no_args():
 
 def test_init_with_invalid_path():
     with pytest.raises(Exception):
-        assert File('/path/to/file')
+        assert File('/path/to/file_name.txt')
 
 
+# This test is used only for 100% coverage as both
+# _populate methods are covered in other tests
 def test_populate(f):
     f.populate()
-    assert f.name == 'name'
+    assert f.name == 'file_name'
     assert f.signature == 'signature'
-    assert f.extension == 'ext'
+    assert f.extension == 'txt'
+
+
+def test_populate_name(f):
+    assert f._populate_name() == 'file_name'
+
+
+def test_populate_signature(f):
+    assert f._populate_signature() == 'signature'
+
+
+def test_populate_extension(f):
+    assert f._populate_extension() == 'txt'
