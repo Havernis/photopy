@@ -3,7 +3,7 @@
 """scan module."""
 
 import os
-# from photopy.file import File
+from photopy.file import File
 from photopy.photo import Photo
 
 
@@ -22,7 +22,7 @@ class Scan:
             for file_name in files_names:
                 if file_name.endswith(EXT_PHOTOS):
                     f = Photo(os.path.join(root, file_name))
-                # else:
-                    # f = File(os.path.join(root, file))
-                    list_of_files.append(f)  # Need to be less intented once I choose to add File functionality
+                else:
+                    f = File(os.path.join(root, file_name))
+                list_of_files.append(f)
         return list_of_files
