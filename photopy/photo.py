@@ -2,7 +2,7 @@
 
 """photo module."""
 
-import sys
+# import sys
 from photopy.file import File
 from PIL import Image
 from PIL.ExifTags import TAGS
@@ -28,8 +28,8 @@ class Photo(File):
         try:
             for tag, value in raw_exif_data.items():
                 exif.append((TAGS.get(tag, tag), value))
-        except Exception as e:
-            raise e
+        except:
+            raise Exception
         return exif
 
     def _populate_signature(self):

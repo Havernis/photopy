@@ -17,8 +17,7 @@ from unittest.mock import patch
 @patch('os.path.isfile')
 def f(isfile_mock):
     isfile_mock.return_value = True
-    f = File('/path/to/file_name.txt')
-    return f
+    return File('/path/to/file_name.txt')
 
 
 def test_init(f):
@@ -31,7 +30,9 @@ def test_init_with_no_args():
         assert File()
 
 
-def test_init_with_invalid_path():
+@patch('os.path.isfile')
+def test_init_with_invalid_path(isfile_mock):
+    isfile_mock.return_value = False
     with pytest.raises(Exception):
         assert File('/path/to/file_name.txt')
 

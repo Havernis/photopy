@@ -4,17 +4,16 @@
 """Tests for `photo` module."""
 
 import pytest
+from unittest import mock
 from photopy.photo import Photo
 from unittest.mock import patch
-from unittest import mock
 
 
 @pytest.fixture
 @patch('os.path.isfile')
 def p(isfile_mock):
     isfile_mock.return_value = True
-    p = Photo('/path/to/photo')
-    return p
+    return Photo('/path/to/photo')
 
 
 def test_init(p):

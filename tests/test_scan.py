@@ -12,15 +12,27 @@ from unittest.mock import patch
 
 
 @pytest.fixture
-def s():
-    return Scan('path/to/root/folder', 'path/to/db', [])
+@patch('os.path.isdir')
+def s(mock_isdir):
+    mock_isdir.return_value = True
+    return Scan('path/to/root/folder')
 
 
 def test_init(s):
     assert isinstance(s, Scan)
     assert s.root_path == 'path/to/root/folder'
-    assert s.db_path == 'path/to/db'
-    assert isinstance(s.db_records, list)
+
+
+def test_init_no_path():
+    with pytest.raises(Exception):
+        Scan()
+
+
+@patch('os.path.isdir')
+def test_init_invalid_path(mock_isdir):
+    mock_isdir.return_value = False
+    with pytest.raises(Exception):
+        Scan('path/to/root/folder/which/does/not/exists')
 
 
 @patch('photopy.photo.Photo.__init__')
@@ -30,8 +42,7 @@ def test_scan(walk_patch, isfile_mock, photo_mock, s):
     walk_patch.return_value = [('/foo', (), ('photo.jpeg', 'file.txt'))]
     isfile_mock.return_value = True
     photo_mock.return_value = None
-    list_of_files = s.scan('/root_path')
+    list_of_files = s.scan()
     assert isinstance(list_of_files, list)
     assert isinstance(list_of_files[0], object)
-    # assert isinstance(list_of_files[1], File)
-    # asset size of list_of_files
+    assert len(list_of_files) == 2

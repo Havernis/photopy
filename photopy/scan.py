@@ -11,14 +11,15 @@ EXT_PHOTOS = ('jpeg', 'exif', 'tiff', 'tif', 'gif', 'bmp', 'png', 'svg', 'jpg', 
 
 
 class Scan:
-    def __init__(self, root_path, db_path, db_records):
-        self.root_path = root_path
-        self.db_path = db_path
-        self.db_records = db_records
+    def __init__(self, root_path):
+        if os.path.isdir(root_path):
+            self.root_path = root_path
+        else:
+            raise Exception
 
-    def scan(self, root_path):
+    def scan(self):
         list_of_files = []
-        for root, dirs, files_names in os.walk(root_path):
+        for root, dirs, files_names in os.walk(self.root_path):
             for file_name in files_names:
                 if file_name.endswith(EXT_PHOTOS):
                     f = Photo(os.path.join(root, file_name))

@@ -11,7 +11,7 @@ class File:
         if os.path.isfile(path):
             self.path = path
         else:
-            raise ValueError
+            raise Exception
         self.name = None
         self.extension = None
         self.signature = None
