@@ -9,12 +9,12 @@ from photopy.database import Database
 
 
 @pytest.fixture
-def d():
+def database_fixture():
     return Database('/path/to/database')
 
 
-def test_init(d):
-    assert d.path == '/path/to/database'
+def test_init(database_fixture):
+    assert database_fixture.path == '/path/to/database'
 
 
 def test_init_no_path():
@@ -22,15 +22,15 @@ def test_init_no_path():
         Database()
 
 
-def test_get_sorted_records(d):
-    assert d.get_sorted_records() == ['test_record_1', 'test_record_2']
+def test_get_sorted_records(database_fixture):
+    assert database_fixture.get_sorted_records() == ['test_record_1', 'test_record_2']
 
 
-def test_insert_records(d):
+def test_insert_records(database_fixture):
     list_of_records = ['test_record_1', 'test_record_2']
-    assert d.insert_records(list_of_records) is True
+    assert database_fixture.insert_records(list_of_records) is True
 
 
-def test_delete_records(d):
+def test_delete_records(database_fixture):
     list_of_records = ['test_record_1', 'test_record_2']
-    assert d.delete_records(list_of_records) is True
+    assert database_fixture.delete_records(list_of_records) is True

@@ -15,14 +15,14 @@ from unittest.mock import patch
 
 @pytest.fixture
 @patch('os.path.isfile')
-def f(isfile_mock):
+def file_fixture(isfile_mock):
     isfile_mock.return_value = True
     return File('/path/to/file_name.txt')
 
 
-def test_init(f):
-    assert isinstance(f, File)
-    assert f.path == '/path/to/file_name.txt'
+def test_init(file_fixture):
+    assert isinstance(file_fixture, File)
+    assert file_fixture.path == '/path/to/file_name.txt'
 
 
 def test_init_with_no_args():
@@ -39,20 +39,20 @@ def test_init_with_invalid_path(isfile_mock):
 
 # This test is used only for 100% coverage as both
 # _populate methods are covered in other tests
-def test_populate(f):
-    f.populate()
-    assert f.name == 'file_name'
-    assert f.signature == 'signature'
-    assert f.extension == 'txt'
+def test_populate(file_fixture):
+    file_fixture.populate()
+    assert file_fixture.name == 'file_name'
+    assert file_fixture.signature == 'signature'
+    assert file_fixture.extension == 'txt'
 
 
-def test_populate_name(f):
-    assert f._populate_name() == 'file_name'
+def test_populate_name(file_fixture):
+    assert file_fixture._populate_name() == 'file_name'
 
 
-def test_populate_signature(f):
-    assert f._populate_signature() == 'signature'
+def test_populate_signature(file_fixture):
+    assert file_fixture._populate_signature() == 'signature'
 
 
-def test_populate_extension(f):
-    assert f._populate_extension() == 'txt'
+def test_populate_extension(file_fixture):
+    assert file_fixture._populate_extension() == 'txt'

@@ -13,14 +13,14 @@ from unittest.mock import patch
 
 @pytest.fixture
 @patch('os.path.isdir')
-def s(mock_isdir):
+def scan_fixture(mock_isdir):
     mock_isdir.return_value = True
     return Scan('path/to/root/folder')
 
 
-def test_init(s):
-    assert isinstance(s, Scan)
-    assert s.root_path == 'path/to/root/folder'
+def test_init(scan_fixture):
+    assert isinstance(scan_fixture, Scan)
+    assert scan_fixture.root_path == 'path/to/root/folder'
 
 
 def test_init_no_path():
@@ -38,11 +38,11 @@ def test_init_invalid_path(mock_isdir):
 @patch('photopy.photo.Photo.__init__')
 @patch('os.path.isfile')
 @patch('os.walk')
-def test_scan(walk_patch, isfile_mock, photo_mock, s):
+def test_scan(walk_patch, isfile_mock, photo_mock, scan_fixture):
     walk_patch.return_value = [('/foo', (), ('photo.jpeg', 'file.txt'))]
     isfile_mock.return_value = True
     photo_mock.return_value = None
-    list_of_files = s.scan()
+    list_of_files = scan_fixture.scan()
     assert isinstance(list_of_files, list)
     assert isinstance(list_of_files[0], object)
     assert len(list_of_files) == 2
