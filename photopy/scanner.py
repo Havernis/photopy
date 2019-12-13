@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""scan module."""
+"""scanner module."""
 
 import os
 from photopy.file import File
@@ -10,7 +10,7 @@ from photopy.photo import Photo
 EXT_PHOTOS = ('jpeg', 'exif', 'tiff', 'tif', 'gif', 'bmp', 'png', 'svg', 'jpg', 'jif', 'jfif', 'jp2', 'jpx', 'j2k', 'j2c', 'pcd', 'pdf')
 
 
-class Scan:
+class Scanner:
     def __init__(self, root_path):
         if os.path.isdir(root_path):
             self.root_path = root_path
