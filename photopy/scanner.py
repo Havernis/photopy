@@ -3,12 +3,11 @@
 """scanner module."""
 
 import os
-from file import *
-# from photo import *
+from photopy.file import File
+from photopy.photo import Photo
 
 
-# EXT_PHOTOS = ('jpeg', 'exif', 'tiff', 'tif', 'gif', 'bmp', 'png', 'svg', 'jpg', 'jif', 'jfif', 'jp2', 'jpx', 'j2k', 'j2c', 'pcd')
-# Need also to add this statement: if file_name.lower().endswith(EXT_PHOTOS):
+EXT_PHOTOS = ('jpeg', 'exif', 'tiff', 'tif', 'gif', 'bmp', 'png', 'svg', 'jpg', 'jif', 'jfif', 'jp2', 'jpx', 'j2k', 'j2c', 'pcd', 'pdf')
 
 
 class Scanner:
@@ -16,35 +15,15 @@ class Scanner:
         if os.path.isdir(root_path):
             self.root_path = root_path
         else:
-            print(f"\nException was raised in Scanner.init({root_path})")
             raise Exception
 
     def scan(self):
         list_of_files = []
-        for root, dirs, files in os.walk(self.root_path):
-            for file in files:
-                try:
-                    f = File(os.path.join(root, file))
-                    list_of_files.append(f)
-                except:  # Any exception at the moment.
-                    continue
-            print('#', flush=True, end='')
-        print()
+        for root, dirs, files_names in os.walk(self.root_path):
+            for file_name in files_names:
+                if file_name.endswith(EXT_PHOTOS):
+                    f = Photo(os.path.join(root, file_name))
+                else:
+                    f = File(os.path.join(root, file_name))
+                list_of_files.append(f)
         return list_of_files
-
-    def scan_for_duplicates(self, list_of_ordered_records):
-        duplicates_list = []
-        clean_list = [[None, None, None], ]
-        count_duplicates = 0
-        for record in list_of_ordered_records:
-            if record[2] == clean_list[-1][2]:
-                duplicates_list.append(record[0])  # append only file_path
-                count_duplicates += 1
-            else:
-                clean_list.append(record)
-        print(f"Found total {count_duplicates} duplicates")
-        return duplicates_list
-
-    def scan_for_simillar(self):
-        # To be implemented in the future. Need to change the hashing algorythm
-        pass
