@@ -11,9 +11,9 @@ BUF_SIZE = 65536  # 64K chunk
 class File:
     def __init__(self, path):
         if os.path.isfile(path):
-            self.path = path
+            self.path = os.path.abspath(path)
         else:
-            print(f"Exception was raised in File.init({path})")
+            print(f"\nException was raised in File.init({path})")
             raise Exception
 
     def _populate_name(self):
