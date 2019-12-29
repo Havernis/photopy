@@ -2,9 +2,9 @@
 
 """Main module."""
 
-from scanner import *
-from database import *
-from executor import *
+from photopy.scanner import *
+from photopy.database import *
+from photopy.executor import *
 import argparse
 import os
 
@@ -16,13 +16,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--path', help="Path to root folder")
     parser.add_argument('-d', '--database', help="Path to database (will be created if not existing)")
-    parser.add_argument('-a', '--action', help="action to do - 'move' or 'delete'")  # implement a default or not a must value
-    parser.add_argument('-f', '--folder', help="Path to duplicated folder")
+    parser.add_argument('-a', '--action', help="action to do - 'move' or 'delete'", default='move')  # implement a default or not a must value
+    parser.add_argument('-f', '--folder', help="Path to duplicated folder", required=False)
     args = parser.parse_args()
     root_path = os.path.abspath(args.path)
     db_path = os.path.abspath(args.database)
     action = args.action
     duplicated_folder = args.folder
+    if action == 'move' and duplicated_folder is None:
+        print("Duplicated folder path must be provided when using 'move' action. Please use the '-f' or '--folder' flag")
+        exit(1)
+    elif action == 'delete':
+        duplicated_folder = None
     print(f"Root path: {root_path}\nDatabase path: {db_path}")
 
     print(f"Creating/Connecting to database...", end='')
@@ -55,7 +60,7 @@ def main():
     if len(list_of_duplicates) != 0:
         exec = Executor()
         if exec.execute(list_of_duplicates, duplicated_folder, action):
-            print(f"Duplicated files were {action}ed as requested")
+            print(f"Duplicated files were {action}d as requested")
         # What about else???
     else:
         print("Found no duplicated files, closing connections and script.")
@@ -64,7 +69,4 @@ def main():
     # Need to move the db connect, cursor, and close functions inside the class itself!
     db.close_cursor()
     db.close_connection()
-
-
-if __name__ == "__main__":
-    main()
+    exit(0)

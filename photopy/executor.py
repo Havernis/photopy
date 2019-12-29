@@ -23,17 +23,24 @@ class Executor:
     def _move(self):
         self._create_dir_for_duplicates()
         for file in self.files_list:
-            filename = os.path.basename(file)
-            if not os.path.isfile(os.path.join(self.duplicated_folder_path, filename)):
-                shutil.move(file, self.duplicated_folder_path)
-            else:  # file with the same name already exists in dest folder..
-                name_and_extention = os.path.splitext(filename)
-                random_int = str(randint(0, 10000))
-                new_filename = name_and_extention[0] + '_' + random_int + name_and_extention[1]
-                print(os.path.join(self.duplicated_folder_path, new_filename))
-                shutil.move(file, os.path.join(self.duplicated_folder_path, new_filename))
+            try:
+                filename = os.path.basename(file)
+                if not os.path.isfile(os.path.join(self.duplicated_folder_path, filename)):
+                    shutil.move(file, self.duplicated_folder_path)
+                else:  # file with the same name already exists in dest folder..
+                    name_and_extention = os.path.splitext(filename)
+                    random_int = str(randint(0, 10000))
+                    new_filename = name_and_extention[0] + '_' + random_int + name_and_extention[1]
+                    shutil.move(file, os.path.join(self.duplicated_folder_path, new_filename))
+            except:
+                print(f"Unable to move {file}, exception was raised on executor._move()")
 
     def _delete(self):
+        for file in self.files_list:
+            try:
+                os.remove(file)
+            except:
+                print(f"Unable to delete {file}, exception was raised on executor._delete()")
         return True
 
     def _create_dir_for_duplicates(self):

@@ -2,7 +2,7 @@
 
 """photo module."""
 
-from file import *
+from photopy.file import *
 from PIL import Image
 from PIL.ExifTags import TAGS
 import imagehash

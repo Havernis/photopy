@@ -3,7 +3,7 @@
 """scanner module."""
 
 import os
-from file import *
+from photopy.file import *
 # from photo import *
 
 
