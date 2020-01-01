@@ -4,11 +4,10 @@
 
 import os
 from photopy.file import *
-# from photo import *
+from photopy.photo import *
 
 
-# EXT_PHOTOS = ('jpeg', 'exif', 'tiff', 'tif', 'gif', 'bmp', 'png', 'svg', 'jpg', 'jif', 'jfif', 'jp2', 'jpx', 'j2k', 'j2c', 'pcd')
-# Need also to add this statement: if file_name.lower().endswith(EXT_PHOTOS):
+PHOTO_EXTENTIONS = ('jpeg', 'exif', 'tiff', 'tif', 'gif', 'bmp', 'png', 'svg', 'jpg', 'jif', 'jfif', 'jp2', 'jpx', 'j2k', 'j2c', 'pcd')
 
 
 class Scanner:
@@ -23,11 +22,20 @@ class Scanner:
         list_of_files = []
         for root, dirs, files in os.walk(self.root_path):
             for file in files:
-                try:
-                    f = File(os.path.join(root, file))
-                    list_of_files.append(f)
-                except:  # Any exception at the moment.
-                    continue
+                if file.lower().endswith(PHOTO_EXTENTIONS):
+                    try:
+                        f = Photo(os.path.join(root, file))
+                        list_of_files.append(f)
+                    except:  # Any exception at the moment.
+                        print(f"Exception was raised in Photo.{file}")
+                        continue
+                else:
+                    try:
+                        f = File(os.path.join(root, file))
+                        list_of_files.append(f)
+                    except:  # Any exception at the moment.
+                        print(f"Exception was raised in File.{file}")
+                        continue
             print('#', flush=True, end='')
         print()
         return list_of_files

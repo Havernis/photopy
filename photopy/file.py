@@ -16,10 +16,8 @@ class File:
             print(f"\nException was raised in File.init({path})")
             raise Exception
 
-    def _populate_name(self):
-        name_with_ext = os.path.basename(self.path)
-        name = os.path.splitext(name_with_ext)[0]
-        return name
+    def _populate_size(self):
+        return os.path.getsize(self.path)
 
     def _populate_hash(self):
         md5 = hashlib.md5()
@@ -33,9 +31,9 @@ class File:
         return md5.hexdigest()
 
     def _populate(self):
-        self.name = self._populate_name()
+        self.size = self._populate_size()
         self.hash = self._populate_hash()
 
     def get_file_details(self):
         self._populate()
-        return (self.path, self.name, self.hash)
+        return (self.path, self.size, self.hash)
